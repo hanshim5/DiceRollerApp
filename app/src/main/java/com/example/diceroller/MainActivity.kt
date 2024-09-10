@@ -21,8 +21,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.stringResource
 import androidx.compose.material3.Button
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.res.painterResource
@@ -32,10 +34,14 @@ import androidx.compose.runtime.setValue
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
             DiceRollerTheme {
-                DiceRollerApp()
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    DiceRollerApp()
+                }
             }
         }
     }
@@ -60,12 +66,12 @@ fun DiceWithButtonAndImage(modifier: Modifier = Modifier)
         5 -> R.drawable.dice_5
         else -> R.drawable.dice_6
     }
-    Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(modifier = modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, Alignment.CenterHorizontally) {
         Image(
             painter = painterResource(imageResource),
             contentDescription = result.toString()
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(20.dp))
         Button(onClick = { result = (1..6).random() }) {
             // Observables are stateless by default, but composable functions can store an object in memory using the remember composable
             // var result by remember { mutableStateOf(1) }    mutableStateOf() returns an observable
